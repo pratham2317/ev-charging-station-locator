@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EV Charging Station Locator</title>
+    <style> 
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>EV Charging Station Locator</h1>
+
+    <button onclick="getLocation()">Find Nearest Station</button>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPos, showError);
+            } else {
+                alert("Geolocation not supported by your browser.");
+            }
+        }
+
+        function showPos(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            window.location.href =
+                `https://www.google.com/maps/search/EV+charging+station/@${lat},${lon},15z`;
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
